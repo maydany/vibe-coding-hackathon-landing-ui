@@ -1,3 +1,5 @@
+
+
 import { useEffect, useRef } from 'react';
 
 interface MatrixChar {
@@ -10,7 +12,11 @@ interface MatrixChar {
   activeUntil: number; // For twinkling effect
 }
 
-export function HackathonBackground() {
+interface HackathonBackgroundProps {
+  theme?: 'purple' | 'black' | 'dark-blue';
+}
+
+export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -19,6 +25,46 @@ export function HackathonBackground() {
     
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    // Theme Configuration
+    const themeConfig = {
+      purple: {
+        bg: '#0f0f1a', // Deep Purple
+        wordShadow: '#d8b4fe',
+        wordColor: (opacity: number) => `rgba(235, 180, 255, ${opacity})`,
+        bgShadow: '#8844aa',
+        bgRgb: (opacity: number) => {
+          const r = Math.floor(80 + opacity * 60);
+          const g = Math.floor(30 + opacity * 40);
+          const b = Math.floor(120 + opacity * 80);
+          return `rgba(${r}, ${g}, ${b}, ${opacity * 0.8})`;
+        }
+      },
+      black: {
+        bg: '#000000', // Pure Black
+        wordShadow: '#ffffff', // White Glow
+        wordColor: (opacity: number) => `rgba(255, 255, 255, ${opacity})`,
+        bgShadow: '#cccccc', 
+        bgRgb: (opacity: number) => {
+          const v = Math.floor(60 + opacity * 100);
+          return `rgba(${v}, ${v}, ${v}, ${opacity * 0.8})`;
+        }
+      },
+      'dark-blue': {
+        bg: '#020617', // Dark Slate Blue
+        wordShadow: '#60a5fa', // Blue-400 Glow
+        wordColor: (opacity: number) => `rgba(147, 197, 253, ${opacity})`, // Blue-300
+        bgShadow: '#1e40af',
+        bgRgb: (opacity: number) => {
+          const r = Math.floor(20 + opacity * 40);
+          const g = Math.floor(40 + opacity * 60);
+          const b = Math.floor(100 + opacity * 155);
+          return `rgba(${r}, ${g}, ${b}, ${opacity * 0.8})`;
+        }
+      }
+    };
+
+    const colors = themeConfig[theme];
 
     // Words to show prominently
     const words = [
@@ -184,7 +230,7 @@ export function HackathonBackground() {
         handleNewRow();
       }
       
-      ctx.fillStyle = '#0a0a14';
+      ctx.fillStyle = colors.bg;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.font = `${fontSize}px "Fira Code", "Courier New", monospace`;
@@ -244,26 +290,19 @@ export function HackathonBackground() {
 
             if (posY > -gap && posY < canvas.height + gap) {
               if (cell.isWord) {
-                // Word Glow - Bright Purple/White mix
-                ctx.shadowColor = '#d8b4fe'; // Light purple glow
+                // Word Glow
+                ctx.shadowColor = colors.wordShadow;
                 ctx.shadowBlur = cell.opacity * 25;
-                // Tinted purple white
-                const r = 235;
-                const g = 180;
-                const b = 255;
-                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${cell.opacity})`;
+                ctx.fillStyle = colors.wordColor(cell.opacity);
               } else {
                 // Background Glow
                 if (cell.opacity > 0.4) {
-                  ctx.shadowColor = '#8844aa';
+                  ctx.shadowColor = colors.bgShadow;
                   ctx.shadowBlur = 4;
                 } else {
                   ctx.shadowBlur = 0;
                 }
-                const r = Math.floor(80 + cell.opacity * 60);
-                const g = Math.floor(30 + cell.opacity * 40);
-                const b = Math.floor(120 + cell.opacity * 80);
-                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${cell.opacity * 0.8})`;
+                ctx.fillStyle = colors.bgRgb(cell.opacity);
               }
               
               ctx.fillText(cell.char, posX, posY);
@@ -282,7 +321,7 @@ export function HackathonBackground() {
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [theme]); // Re-run effect when theme changes
 
   return (
     <canvas
@@ -293,7 +332,7 @@ export function HackathonBackground() {
         left: 0,
         width: '100%',
         height: '100%',
-        background: '#0a0a14',
+        background: '#0a0a14', // Default fallback
       }}
     />
   );
