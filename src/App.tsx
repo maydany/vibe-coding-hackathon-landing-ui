@@ -17,7 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/concept-1" element={
               <>
-                <Hero />
+                <HeroConcept3 />
                 <Features />
               </>
             } />
@@ -29,7 +29,7 @@ function App() {
             } />
             <Route path="/concept-3" element={
               <>
-                <HeroConcept3 />
+                <Hero />
                 <Features />
               </>
             } />

@@ -5,15 +5,16 @@ import { ChevronDown, Check } from 'lucide-react';
 
 const themes = {
   purple: {
-    bg: '#0f0f1a',
+    bg: '#000000', // Pure Black
     label: 'Purple',
-    titleGradient: 'from-white via-purple-200 to-white',
-    badgeStyle: 'border-purple-500/30 bg-purple-500/10 text-purple-300',
-    accentColor: 'text-purple-300',
-    scrollBorder: 'border-purple-500/30',
-    scrollDot: 'bg-purple-500',
-    checkColor: 'text-purple-400',
-    subtitleDropShadow: 'drop-shadow-[0_0_10px_rgba(192,132,252,0.3)]',
+    // Gradient from Violet to Indigo matching the logo style
+    titleGradient: 'from-[#a78bfa] via-[#6366f1] to-[#a78bfa]',
+    badgeStyle: 'border-violet-500/50 bg-black text-[#a78bfa] font-mono tracking-widest',
+    accentColor: 'text-[#a78bfa]',
+    scrollBorder: 'border-violet-500/50',
+    scrollDot: 'bg-violet-500',
+    checkColor: 'text-violet-500',
+    subtitleDropShadow: 'drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] font-mono',
   },
   black: {
     bg: '#000000',
@@ -36,6 +37,17 @@ const themes = {
     scrollDot: 'bg-blue-500',
     checkColor: 'text-blue-400',
     subtitleDropShadow: 'drop-shadow-[0_0_10px_rgba(96,165,250,0.3)]',
+  },
+  green: {
+    bg: '#000000', // Pure Black
+    label: 'Green',
+    titleGradient: 'from-green-500 via-green-200 to-green-500', // Matrix high-contrast green
+    badgeStyle: 'border-green-500/50 bg-black text-green-400 font-mono tracking-widest', // Added font-mono for terminal feel
+    accentColor: 'text-green-400',
+    scrollBorder: 'border-green-500/50',
+    scrollDot: 'bg-green-500',
+    checkColor: 'text-green-500',
+    subtitleDropShadow: 'drop-shadow-[0_0_8px_rgba(74,222,128,0.5)] font-mono', // Added font-mono
   },
 };
 

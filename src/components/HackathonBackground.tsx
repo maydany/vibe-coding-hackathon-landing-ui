@@ -13,7 +13,7 @@ interface MatrixChar {
 }
 
 interface HackathonBackgroundProps {
-  theme?: 'purple' | 'black' | 'dark-blue';
+  theme?: 'purple' | 'black' | 'dark-blue' | 'green';
 }
 
 export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundProps) {
@@ -29,15 +29,17 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
     // Theme Configuration
     const themeConfig = {
       purple: {
-        bg: '#0f0f1a', // Deep Purple
-        wordShadow: '#d8b4fe',
-        wordColor: (opacity: number) => `rgba(235, 180, 255, ${opacity})`,
-        bgShadow: '#8844aa',
+        bg: '#000000', // Pure Black
+        wordShadow: '#a78bfa', // Violet-400 glow
+        // Deeper Violet for richer contrast
+        wordColor: (opacity: number) => `rgba(139, 92, 246, ${opacity})`, // Violet-500
+        bgShadow: '#4c1d95',
         bgRgb: (opacity: number) => {
-          const r = Math.floor(80 + opacity * 60);
-          const g = Math.floor(30 + opacity * 40);
-          const b = Math.floor(120 + opacity * 80);
-          return `rgba(${r}, ${g}, ${b}, ${opacity * 0.8})`;
+          // Boosted background brightness
+          const r = Math.floor(120 + opacity * 100);
+          const g = Math.floor(70 + opacity * 80);
+          const b = Math.floor(200 + opacity * 55);
+          return `rgba(${r}, ${g}, ${b}, ${opacity * 0.9})`;
         }
       },
       black: {
@@ -46,20 +48,35 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
         wordColor: (opacity: number) => `rgba(255, 255, 255, ${opacity})`,
         bgShadow: '#cccccc', 
         bgRgb: (opacity: number) => {
-          const v = Math.floor(60 + opacity * 100);
+          // Boosted gray brightness
+          const v = Math.floor(90 + opacity * 100);
           return `rgba(${v}, ${v}, ${v}, ${opacity * 0.8})`;
         }
       },
       'dark-blue': {
         bg: '#020617', // Dark Slate Blue
         wordShadow: '#60a5fa', // Blue-400 Glow
-        wordColor: (opacity: number) => `rgba(147, 197, 253, ${opacity})`, // Blue-300
+        // Deeper Blue (Blue-500)
+        wordColor: (opacity: number) => `rgba(59, 130, 246, ${opacity})`, 
         bgShadow: '#1e40af',
         bgRgb: (opacity: number) => {
-          const r = Math.floor(20 + opacity * 40);
-          const g = Math.floor(40 + opacity * 60);
-          const b = Math.floor(100 + opacity * 155);
+          // Boosted blue brightness
+          const r = Math.floor(40 + opacity * 40);
+          const g = Math.floor(80 + opacity * 60);
+          const b = Math.floor(140 + opacity * 115);
           return `rgba(${r}, ${g}, ${b}, ${opacity * 0.8})`;
+        }
+      },
+      green: {
+        bg: '#000000', // Pure Black for Matrix feel
+        wordShadow: '#00ff41', // Matrix Neon Green Glow
+        // Deeper Green (Green-500)
+        wordColor: (opacity: number) => `rgba(34, 197, 94, ${opacity})`, 
+        bgShadow: '#008f11',
+        bgRgb: (opacity: number) => {
+          // Boosted matrix rain brightness
+          const g = Math.floor(100 + opacity * 155);
+          return `rgba(0, ${g}, 0, ${opacity * 0.9})`;
         }
       }
     };
@@ -71,7 +88,7 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
       'EMONAD',
       'CHOG',
       'SHRAMP',
-      'MONAD',
+      // 'MONAD', // Removed as requested
       'MOTION',
       'MONCOCK',
       'MONAD LISA',
@@ -147,9 +164,17 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
       grid.push(createRow());
     };
     
+    // Track words currently on screen to avoid duplicates
+    const activeWords = new Set<string>();
+
     // Function to try spawning a word
     const trySpawnWord = () => {
-      const word = words[Math.floor(Math.random() * words.length)];
+      // Filter out active words
+      const availableWords = words.filter(w => !activeWords.has(w));
+      if (availableWords.length === 0) return;
+
+      const word = availableWords[Math.floor(Math.random() * availableWords.length)];
+      
       const horizontal = Math.random() > 0.4;
       
       // Randomize duration and fade speed for this specific word instance
@@ -164,6 +189,13 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
           
           if (isAreaClear(x, y, word.length, true)) {
             const now = Date.now();
+            
+            // Mark word as active and schedule removal
+            activeWords.add(word);
+            setTimeout(() => {
+              activeWords.delete(word);
+            }, duration + 2000); // Duration + 2s fade out buffer
+
             for (let j = 0; j < word.length; j++) {
               const cell = grid[y][x + j];
               cell.char = word[j];
@@ -181,6 +213,13 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
           
           if (isAreaClear(x, y, word.length, false)) {
             const now = Date.now();
+            
+            // Mark word as active and schedule removal
+            activeWords.add(word);
+            setTimeout(() => {
+              activeWords.delete(word);
+            }, duration + 2000);
+
             for (let j = 0; j < word.length; j++) {
               const cell = grid[y + j][x];
               cell.char = word[j];
@@ -289,10 +328,14 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
             const posY = (y * gap) - scrollOffset;
 
             if (posY > -gap && posY < canvas.height + gap) {
+              // Semi-bold for words, normal for background
+              const weight = cell.isWord ? '700' : '400'; // Using 700 for clearer semi-bold effect
+              ctx.font = `${weight} ${fontSize}px "Fira Code", "Courier New", monospace`;
+
               if (cell.isWord) {
                 // Word Glow
                 ctx.shadowColor = colors.wordShadow;
-                ctx.shadowBlur = cell.opacity * 25;
+                ctx.shadowBlur = cell.opacity * 45;
                 ctx.fillStyle = colors.wordColor(cell.opacity);
               } else {
                 // Background Glow
