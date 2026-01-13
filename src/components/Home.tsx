@@ -15,8 +15,8 @@ export function Home() {
             whileTap={{ scale: 0.95 }}
             className="group relative flex h-64 w-64 flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-colors hover:bg-white/10 hover:border-purple-500/50"
           >
-             <h2 className="text-2xl font-bold text-white group-hover:text-purple-400">Concept 1</h2>
-             <p className="mt-2 text-sm text-gray-400">Original Design</p>
+             <h2 className="text-2xl font-bold text-white group-hover:text-purple-400">Orbital</h2>
+             <p className="mt-2 text-sm text-gray-400">Interactive 3D Sphere</p>
           </motion.div>
         </Link>
 
@@ -26,8 +26,8 @@ export function Home() {
             whileTap={{ scale: 0.95 }}
             className="group relative flex h-64 w-64 flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-colors hover:bg-white/10 hover:border-green-500/50"
           >
-             <h2 className="text-2xl font-bold text-white group-hover:text-green-400">Concept 2</h2>
-             <p className="mt-2 text-sm text-gray-400">System Log Style</p>
+             <h2 className="text-2xl font-bold text-white group-hover:text-green-400">Cubic</h2>
+             <p className="mt-2 text-sm text-gray-400">Dynamic Voxel Field</p>
           </motion.div>
         </Link>
         
@@ -37,8 +37,19 @@ export function Home() {
             whileTap={{ scale: 0.95 }}
             className="group relative flex h-64 w-64 flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-colors hover:bg-white/10 hover:border-purple-500/50"
           >
-             <h2 className="text-2xl font-bold text-white group-hover:text-purple-400">Concept 3</h2>
-             <p className="mt-2 text-sm text-gray-400">Clone of C1</p>
+             <h2 className="text-2xl font-bold text-white group-hover:text-purple-400">Matrix</h2>
+             <p className="mt-2 text-sm text-gray-400">Generative Code Grid</p>
+          </motion.div>
+        </Link>
+
+        <Link to="/concept-4">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative flex h-64 w-64 flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-colors hover:bg-white/10 hover:border-blue-500/50"
+          >
+             <h2 className="text-2xl font-bold text-white group-hover:text-blue-400">Workstation</h2>
+             <p className="mt-2 text-sm text-gray-400">Glassmorphic Side Layout</p>
           </motion.div>
         </Link>
       </div>

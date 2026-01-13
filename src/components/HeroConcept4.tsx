@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from 'framer-motion';
-
 import { useState } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
 
@@ -53,7 +52,7 @@ const themes = {
 
 type ThemeKey = keyof typeof themes;
 
-export function HeroConcept3() {
+export function HeroConcept4() {
   const [currentTheme, setCurrentTheme] = useState<ThemeKey>('purple');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -110,41 +109,44 @@ export function HeroConcept3() {
       {/* Animated Hackathon Background */}
       <div className="absolute inset-0 z-0">
         <iframe 
-          src='https://my.spline.design/orb-nHZyz0DUTihVpAVXnCnHHt8v/' 
+          src='https://my.spline.design/cutecomputerfollowcursor-tYYFdbNy0gcLqmlVsMsIkjtx/' 
           frameBorder='0' 
           width='100%' 
           height='100%'
-          className="h-full w-full object-cover pointer-events-none"
+          style={{ width: '100%', height: '100%', border: 'none' }}
+          className="h-full w-full"
         ></iframe>
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+      <div className="absolute inset-x-0 bottom-0 z-10 flex justify-center p-6 md:justify-start md:bottom-12 md:left-12 md:p-0 md:inset-auto pointer-events-none">
         <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="max-w-4xl"
+            className="w-full max-w-2xl rounded-3xl border border-white/10 bg-black/70 p-8 backdrop-blur-2xl shadow-2xl md:p-10"
           >
             {/* Event Badge */}
-            <motion.span
+            <motion.div 
+              className="flex justify-center md:justify-start"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className={`mb-6 inline-flex items-center gap-2 rounded-full border px-5 py-2 text-sm font-semibold tracking-widest uppercase backdrop-blur-md transition-colors duration-500 ${theme.badgeStyle}`}
             >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+              <span className={`mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold tracking-widest uppercase backdrop-blur-md transition-colors duration-500 ${theme.badgeStyle}`}>
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                </span>
+                Feb 15 - 17, 2026 • Virtual
               </span>
-              Feb 15 - 17, 2026 • Virtual
-            </motion.span>
+            </motion.div>
   
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="mb-8 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
+              className="mb-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-left"
             >
               <motion.span
                 className={`relative inline-block bg-gradient-to-r bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(255,255,255,0.2)] transition-all duration-700 ${theme.titleGradient}`}
@@ -167,7 +169,7 @@ export function HeroConcept3() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className={`mx-auto mb-10 max-w-2xl text-xl font-medium leading-relaxed text-white/90 sm:text-2xl transition-all duration-500 ${theme.subtitleDropShadow}`}
+              className={`mb-8 text-center text-lg font-medium leading-relaxed text-white/90 transition-all duration-500 md:text-left ${theme.subtitleDropShadow}`}
             >
               We take a snapshot of the 5-day average closing price.
             </motion.p>
@@ -177,7 +179,7 @@ export function HeroConcept3() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
-              className="mb-10 flex flex-wrap justify-center gap-8"
+              className="flex flex-wrap justify-center gap-8 pointer-events-auto md:justify-start"
             >
               {[
                 { value: '$100K', label: 'Prize Pool' },
@@ -190,13 +192,13 @@ export function HeroConcept3() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.7 + i * 0.1, duration: 0.4 }}
-                  className="text-center"
+                  className="text-center md:text-left"
                   whileHover={{ scale: 1.1 }}
                 >
-                  <div className="text-2xl font-bold text-white sm:text-3xl">
+                  <div className="text-xl font-bold text-white sm:text-2xl">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-gray-500">{stat.label}</div>
+                  <div className="text-xs text-gray-500">{stat.label}</div>
                 </motion.div>
               ))}
             </motion.div>

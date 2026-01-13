@@ -14,7 +14,7 @@ const themes = {
     scrollBorder: 'border-violet-500/50',
     scrollDot: 'bg-violet-500',
     checkColor: 'text-violet-500',
-    subtitleDropShadow: 'drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] font-mono',
+    subtitleDropShadow: 'drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]',
   },
   black: {
     bg: '#000000',
@@ -36,7 +36,7 @@ const themes = {
     scrollBorder: 'border-blue-500/30',
     scrollDot: 'bg-blue-500',
     checkColor: 'text-blue-400',
-    subtitleDropShadow: 'drop-shadow-[0_0_10px_rgba(96,165,250,0.3)]',
+    subtitleDropShadow: 'drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]',
   },
   green: {
     bg: '#000000', // Pure Black
@@ -47,7 +47,7 @@ const themes = {
     scrollBorder: 'border-green-500/50',
     scrollDot: 'bg-green-500',
     checkColor: 'text-green-500',
-    subtitleDropShadow: 'drop-shadow-[0_0_8px_rgba(74,222,128,0.5)] font-mono', // Added font-mono
+    subtitleDropShadow: 'drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]', // Added font-mono
   },
 };
 

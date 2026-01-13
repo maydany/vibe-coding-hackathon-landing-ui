@@ -8,6 +8,7 @@ const navItems = [
   { name: 'C1', href: '/concept-1' },
   { name: 'C2', href: '/concept-2' },
   { name: 'C3', href: '/concept-3' },
+  { name: 'C4', href: '/concept-4' },
 ];
 
 export function Navbar() {

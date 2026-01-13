@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { HackathonBackground } from './HackathonBackground';
+
 import { useState } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
 
@@ -14,7 +14,7 @@ const themes = {
     scrollBorder: 'border-violet-500/50',
     scrollDot: 'bg-violet-500',
     checkColor: 'text-violet-500',
-    subtitleDropShadow: 'drop-shadow-[0_0_8px_rgba(139,92,246,0.5)] font-mono',
+    subtitleDropShadow: 'drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]',
   },
   black: {
     bg: '#000000',
@@ -36,7 +36,7 @@ const themes = {
     scrollBorder: 'border-blue-500/30',
     scrollDot: 'bg-blue-500',
     checkColor: 'text-blue-400',
-    subtitleDropShadow: 'drop-shadow-[0_0_10px_rgba(96,165,250,0.3)]',
+    subtitleDropShadow: 'drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]',
   },
   green: {
     bg: '#000000', // Pure Black
@@ -47,7 +47,7 @@ const themes = {
     scrollBorder: 'border-green-500/50',
     scrollDot: 'bg-green-500',
     checkColor: 'text-green-500',
-    subtitleDropShadow: 'drop-shadow-[0_0_8px_rgba(74,222,128,0.5)] font-mono', // Added font-mono
+    subtitleDropShadow: 'drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]', // Added font-mono
   },
 };
 
@@ -109,11 +109,18 @@ export function HeroConcept2() {
 
       {/* Animated Hackathon Background */}
       <div className="absolute inset-0 z-0">
-        <HackathonBackground theme={currentTheme} />
+        <iframe 
+          src='https://my.spline.design/interactivecubes-IANiTeEwiG2mfl6MMeglicTI/' 
+          frameBorder='0' 
+          width='100%' 
+          height='100%'
+          style={{ width: '100%', height: '100%', border: 'none' }}
+          className="h-full w-full"
+        ></iframe>
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center pointer-events-none">
         <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -171,7 +178,7 @@ export function HeroConcept2() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
-              className="mb-10 flex flex-wrap justify-center gap-8"
+              className="mb-10 flex flex-wrap justify-center gap-8 pointer-events-auto"
             >
               {[
                 { value: '$100K', label: 'Prize Pool' },
