@@ -53,7 +53,7 @@ const themes = {
 
 type ThemeKey = keyof typeof themes;
 
-export function HeroConcept2() {
+export function HeroConcept1() {
   const [currentTheme, setCurrentTheme] = useState<ThemeKey>('purple');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 

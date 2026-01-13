@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
+import { HeroConcept1 } from './components/HeroConcept1';
 import { HeroConcept2 } from './components/HeroConcept2';
 import { HeroConcept3 } from './components/HeroConcept3';
 import { Home } from './components/Home';
@@ -29,7 +29,7 @@ function App() {
             } />
             <Route path="/concept-3" element={
               <>
-                <Hero />
+                <HeroConcept1 />
                 <Features />
               </>
             } />
