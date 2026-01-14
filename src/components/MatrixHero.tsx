@@ -9,7 +9,8 @@ const themes = {
     label: 'Purple',
     // Gradient from Violet to Indigo matching the logo style
     titleGradient: 'from-[#a78bfa] via-[#6366f1] to-[#a78bfa]',
-    badgeStyle: 'border-violet-500/50 bg-black text-[#a78bfa] font-mono tracking-widest',
+    badgeStyle:
+      'border-violet-500/50 bg-black text-[#a78bfa] font-mono tracking-widest',
     accentColor: 'text-[#a78bfa]',
     scrollBorder: 'border-violet-500/50',
     scrollDot: 'bg-violet-500',
@@ -42,7 +43,8 @@ const themes = {
     bg: '#000000', // Pure Black
     label: 'Green',
     titleGradient: 'from-green-500 via-green-200 to-green-500', // Matrix high-contrast green
-    badgeStyle: 'border-green-500/50 bg-black text-green-400 font-mono tracking-widest', // Added font-mono for terminal feel
+    badgeStyle:
+      'border-green-500/50 bg-black text-green-400 font-mono tracking-widest', // Added font-mono for terminal feel
     accentColor: 'text-green-400',
     scrollBorder: 'border-green-500/50',
     scrollDot: 'bg-green-500',
@@ -53,26 +55,28 @@ const themes = {
 
 type ThemeKey = keyof typeof themes;
 
-export function HeroConcept1() {
+export function MatrixHero() {
   const [currentTheme, setCurrentTheme] = useState<ThemeKey>('purple');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const theme = themes[currentTheme];
 
   return (
-    <section 
+    <section
       className="relative h-screen w-full overflow-hidden transition-colors duration-700"
       style={{ backgroundColor: theme.bg }}
     >
       {/* Theme Dropdown */}
-      <div className="absolute right-6 top-24 z-50">
+      <div className="absolute top-24 right-6 z-50">
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/40 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition-all hover:bg-white/10 hover:border-white/20"
+            className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/40 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition-all hover:border-white/20 hover:bg-white/10"
           >
             {theme.label}
-            <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown
+              className={`h-4 w-4 text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+            />
           </button>
 
           <AnimatePresence>
@@ -84,16 +88,22 @@ export function HeroConcept1() {
                 transition={{ duration: 0.2 }}
                 className="absolute right-0 mt-2 w-48 overflow-hidden rounded-xl border border-white/10 bg-black/90 py-1 backdrop-blur-xl"
               >
-                {(Object.entries(themes) as [ThemeKey, typeof themes[ThemeKey]][]).map(([key, t]) => (
+                {(
+                  Object.entries(themes) as [
+                    ThemeKey,
+                    (typeof themes)[ThemeKey],
+                  ][]
+                ).map(([key, t]) => (
                   <button
                     key={key}
                     onClick={() => {
                       setCurrentTheme(key);
                       setIsDropdownOpen(false);
                     }}
-                    className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors hover:bg-white/10 hover:text-white ${
-                      currentTheme === key ? `bg-white/5 ${t.accentColor}` : 'text-gray-300'
-                    }`}
+                    className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors hover:bg-white/10 hover:text-white ${currentTheme === key
+                        ? `bg-white/5 ${t.accentColor}`
+                        : 'text-gray-300'
+                      }`}
                   >
                     {t.label}
                     {currentTheme === key && (
@@ -115,87 +125,86 @@ export function HeroConcept1() {
       {/* Content Overlay */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
         <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="max-w-4xl"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="max-w-4xl"
+        >
+          {/* Event Badge */}
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className={`mb-6 inline-flex items-center gap-2 rounded-full border px-5 py-2 text-sm font-semibold tracking-widest uppercase backdrop-blur-md transition-colors duration-500 ${theme.badgeStyle}`}
           >
-            {/* Event Badge */}
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+            </span>
+            Feb 15 - 17, 2026 • Virtual
+          </motion.span>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="mb-8 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
+          >
             <motion.span
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className={`mb-6 inline-flex items-center gap-2 rounded-full border px-5 py-2 text-sm font-semibold tracking-widest uppercase backdrop-blur-md transition-colors duration-500 ${theme.badgeStyle}`}
+              className={`relative inline-block bg-gradient-to-r bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(255,255,255,0.2)] transition-all duration-700 ${theme.titleGradient}`}
+              animate={{
+                backgroundPosition: ['0%', '200%'],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: 'linear',
+              }}
+              style={{ backgroundSize: '200%' }}
             >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-              </span>
-              Feb 15 - 17, 2026 • Virtual
+              Monad Hackathon
             </motion.span>
-  
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="mb-8 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
-            >
-              <motion.span
-                className={`relative inline-block bg-gradient-to-r bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(255,255,255,0.2)] transition-all duration-700 ${theme.titleGradient}`}
-                animate={{
-                  backgroundPosition: ['0%', '200%'],
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: 'linear',
-                }}
-                style={{ backgroundSize: '200%' }}
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className={`mx-auto mb-10 max-w-2xl text-xl leading-relaxed font-medium text-white/90 transition-all duration-500 sm:text-2xl ${theme.subtitleDropShadow}`}
+          >
+            We take a snapshot of the 5-day average closing price.
+          </motion.p>
+
+          {/* Stats Row */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="mb-10 flex flex-wrap justify-center gap-8"
+          >
+            {[
+              { value: '$100K', label: 'Prize Pool' },
+              { value: '48hrs', label: 'To Ship' },
+              { value: '2000+', label: 'Hackers' },
+              { value: '50+', label: 'Mentors' },
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.7 + i * 0.1, duration: 0.4 }}
+                className="text-center"
+                whileHover={{ scale: 1.1 }}
               >
-                Monad Hackathon
-              </motion.span>
-            </motion.h1>
-  
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              className={`mx-auto mb-10 max-w-2xl text-xl font-medium leading-relaxed text-white/90 sm:text-2xl transition-all duration-500 ${theme.subtitleDropShadow}`}
-            >
-              We take a snapshot of the 5-day average closing price.
-            </motion.p>
-  
-            {/* Stats Row */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              className="mb-10 flex flex-wrap justify-center gap-8"
-            >
-              {[
-                { value: '$100K', label: 'Prize Pool' },
-                { value: '48hrs', label: 'To Ship' },
-                { value: '2000+', label: 'Hackers' },
-                { value: '50+', label: 'Mentors' },
-              ].map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.7 + i * 0.1, duration: 0.4 }}
-                  className="text-center"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <div className="text-2xl font-bold text-white sm:text-3xl">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-500">{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-  
+                <div className="text-2xl font-bold text-white sm:text-3xl">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-gray-500">{stat.label}</div>
+              </motion.div>
+            ))}
           </motion.div>
+        </motion.div>
       </div>
 
       {/* Scroll Indicator */}
@@ -213,7 +222,9 @@ export function HeroConcept1() {
           <span className="text-xs tracking-wider text-gray-500 uppercase">
             Scroll
           </span>
-          <div className={`h-10 w-6 rounded-full border-2 p-1 transition-colors duration-500 ${theme.scrollBorder}`}>
+          <div
+            className={`h-10 w-6 rounded-full border-2 p-1 transition-colors duration-500 ${theme.scrollBorder}`}
+          >
             <motion.div
               animate={{ y: [0, 12, 0] }}
               transition={{

@@ -1,5 +1,3 @@
-
-
 import { useEffect, useRef } from 'react';
 
 interface MatrixChar {
@@ -16,13 +14,15 @@ interface HackathonBackgroundProps {
   theme?: 'purple' | 'black' | 'dark-blue' | 'green';
 }
 
-export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundProps) {
+export function HackathonBackground({
+  theme = 'purple',
+}: HackathonBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -40,24 +40,24 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
           const g = Math.floor(70 + opacity * 80);
           const b = Math.floor(200 + opacity * 55);
           return `rgba(${r}, ${g}, ${b}, ${opacity * 0.9})`;
-        }
+        },
       },
       black: {
         bg: '#000000', // Pure Black
         wordShadow: '#ffffff', // White Glow
         wordColor: (opacity: number) => `rgba(255, 255, 255, ${opacity})`,
-        bgShadow: '#cccccc', 
+        bgShadow: '#cccccc',
         bgRgb: (opacity: number) => {
           // Boosted gray brightness
           const v = Math.floor(90 + opacity * 100);
           return `rgba(${v}, ${v}, ${v}, ${opacity * 0.8})`;
-        }
+        },
       },
       'dark-blue': {
         bg: '#020617', // Dark Slate Blue
         wordShadow: '#60a5fa', // Blue-400 Glow
         // Deeper Blue (Blue-500)
-        wordColor: (opacity: number) => `rgba(59, 130, 246, ${opacity})`, 
+        wordColor: (opacity: number) => `rgba(59, 130, 246, ${opacity})`,
         bgShadow: '#1e40af',
         bgRgb: (opacity: number) => {
           // Boosted blue brightness
@@ -65,20 +65,20 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
           const g = Math.floor(80 + opacity * 60);
           const b = Math.floor(140 + opacity * 115);
           return `rgba(${r}, ${g}, ${b}, ${opacity * 0.8})`;
-        }
+        },
       },
       green: {
         bg: '#000000', // Pure Black for Matrix feel
         wordShadow: '#00ff41', // Matrix Neon Green Glow
         // Deeper Green (Green-500)
-        wordColor: (opacity: number) => `rgba(34, 197, 94, ${opacity})`, 
+        wordColor: (opacity: number) => `rgba(34, 197, 94, ${opacity})`,
         bgShadow: '#008f11',
         bgRgb: (opacity: number) => {
           // Boosted matrix rain brightness
           const g = Math.floor(100 + opacity * 155);
           return `rgba(0, ${g}, 0, ${opacity * 0.9})`;
-        }
-      }
+        },
+      },
     };
 
     const colors = themeConfig[theme];
@@ -101,7 +101,7 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
       'MONWOLF',
     ];
     const allChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ';
-    
+
     const fontSize = 18;
     const gap = 26;
     let grid: MatrixChar[][] = [];
@@ -126,11 +126,16 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
       return row;
     };
 
-    const isAreaClear = (startX: number, startY: number, length: number, horizontal: boolean) => {
+    const isAreaClear = (
+      startX: number,
+      startY: number,
+      length: number,
+      horizontal: boolean
+    ) => {
       const pad = 2; // Increased padding for better separation
       const x1 = Math.max(0, startX - pad);
       const y1 = Math.max(0, startY - pad);
-      
+
       let x2, y2;
       if (horizontal) {
         x2 = Math.min(cols - 1, startX + length + pad - 1);
@@ -154,7 +159,7 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
       cols = Math.ceil(canvas.width / gap) + 1;
       rows = Math.ceil(canvas.height / gap) + 4;
       grid = [];
-      
+
       for (let y = 0; y < rows; y++) {
         grid[y] = createRow();
       }
@@ -163,20 +168,21 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
     const handleNewRow = () => {
       grid.push(createRow());
     };
-    
+
     // Track words currently on screen to avoid duplicates
     const activeWords = new Set<string>();
 
     // Function to try spawning a word
     const trySpawnWord = () => {
       // Filter out active words
-      const availableWords = words.filter(w => !activeWords.has(w));
+      const availableWords = words.filter((w) => !activeWords.has(w));
       if (availableWords.length === 0) return;
 
-      const word = availableWords[Math.floor(Math.random() * availableWords.length)];
-      
+      const word =
+        availableWords[Math.floor(Math.random() * availableWords.length)];
+
       const horizontal = Math.random() > 0.4;
-      
+
       // Randomize duration and fade speed for this specific word instance
       const duration = 2000 + Math.random() * 3500; // 2.0s to 5.5s
       const spawnFadeSpeed = 0.01 + Math.random() * 0.02; // 0.01 to 0.03
@@ -186,10 +192,10 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
         if (horizontal) {
           const x = Math.floor(Math.random() * (cols - word.length - 2)) + 1;
           const y = Math.floor(Math.random() * (rows - 4)) + 2; // Avoid very top/bottom edge
-          
+
           if (isAreaClear(x, y, word.length, true)) {
             const now = Date.now();
-            
+
             // Mark word as active and schedule removal
             activeWords.add(word);
             setTimeout(() => {
@@ -210,10 +216,10 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
         } else {
           const x = Math.floor(Math.random() * (cols - 2)) + 1;
           const y = Math.floor(Math.random() * (rows - word.length - 2)) + 1;
-          
+
           if (isAreaClear(x, y, word.length, false)) {
             const now = Date.now();
-            
+
             // Mark word as active and schedule removal
             activeWords.add(word);
             setTimeout(() => {
@@ -243,10 +249,10 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      
+
       // Higher spawn rate for desktop
       spawnRate = window.innerWidth > 1024 ? 0.15 : 0.05;
-      
+
       initGrid();
     };
 
@@ -255,12 +261,12 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
 
     const animate = () => {
       const now = Date.now();
-      
+
       // Randomly try to spawn words
-      if (Math.random() < spawnRate) { 
+      if (Math.random() < spawnRate) {
         trySpawnWord();
       }
-      
+
       // Incremental scroll
       scrollOffset += scrollSpeed;
       if (scrollOffset >= gap) {
@@ -268,7 +274,7 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
         grid.shift();
         handleNewRow();
       }
-      
+
       ctx.fillStyle = colors.bg;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -280,34 +286,40 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
         const row = grid[y];
         for (let x = 0; x < cols; x++) {
           const cell = row[x];
-          
+
           // Lifecycle management for words
           if (cell.isWord) {
-             if (now > cell.activeUntil) {
-                // Time's up, fade away
-                cell.targetOpacity = 0.05; 
-                // Force a consistent slow fade-out for disappearance
-                if (cell.fadeSpeed > 0.01) cell.fadeSpeed = 0.01;
-                
-                // Once it's dim enough, release it
-                if (cell.opacity < 0.1) {
-                   cell.isWord = false;
-                   cell.activeUntil = 0;
-                }
-             } else {
-                // Keep it bright
-                 cell.targetOpacity = 1.0;
-                 // Don't override fadeSpeed here; let the randomized spawn speed handle fade-in
-             }
+            if (now > cell.activeUntil) {
+              // Time's up, fade away
+              cell.targetOpacity = 0.05;
+              // Force a consistent slow fade-out for disappearance
+              if (cell.fadeSpeed > 0.01) cell.fadeSpeed = 0.01;
+
+              // Once it's dim enough, release it
+              if (cell.opacity < 0.1) {
+                cell.isWord = false;
+                cell.activeUntil = 0;
+              }
+            } else {
+              // Keep it bright
+              cell.targetOpacity = 1.0;
+              // Don't override fadeSpeed here; let the randomized spawn speed handle fade-in
+            }
           }
-          
+
           // Smooth fade
           if (cell.opacity < cell.targetOpacity) {
-            cell.opacity = Math.min(cell.opacity + cell.fadeSpeed, cell.targetOpacity);
+            cell.opacity = Math.min(
+              cell.opacity + cell.fadeSpeed,
+              cell.targetOpacity
+            );
           } else if (cell.opacity > cell.targetOpacity) {
-            cell.opacity = Math.max(cell.opacity - cell.fadeSpeed, cell.targetOpacity);
+            cell.opacity = Math.max(
+              cell.opacity - cell.fadeSpeed,
+              cell.targetOpacity
+            );
           }
-          
+
           // Regular background flickering
           if (!cell.isWord && now > cell.nextChange) {
             if (Math.random() < 0.6) {
@@ -321,11 +333,11 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
             cell.nextChange = now + 400 + Math.random() * 1200;
             cell.fadeSpeed = 0.006 + Math.random() * 0.02;
           }
-          
+
           // Draw
           if (cell.opacity > 0.03) {
             const posX = x * gap;
-            const posY = (y * gap) - scrollOffset;
+            const posY = y * gap - scrollOffset;
 
             if (posY > -gap && posY < canvas.height + gap) {
               // Semi-bold for words, normal for background
@@ -347,7 +359,7 @@ export function HackathonBackground({ theme = 'purple' }: HackathonBackgroundPro
                 }
                 ctx.fillStyle = colors.bgRgb(cell.opacity);
               }
-              
+
               ctx.fillText(cell.char, posX, posY);
               ctx.shadowBlur = 0;
             }
