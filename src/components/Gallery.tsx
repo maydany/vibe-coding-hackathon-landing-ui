@@ -8,7 +8,7 @@ import {
   Text,
   Environment,
 } from '@react-three/drei';
-import { useRoute } from 'wouter';
+import { useMatch } from 'react-router-dom';
 import { easing } from 'maath';
 
 const GOLDENRATIO = 1.61803398875;
@@ -113,11 +113,11 @@ function Frame({ url, ...props }: FrameProps) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const image = useRef<any>(null);
   const frame = useRef<THREE.Mesh>(null);
-  const [, params] = useRoute('/item/:id');
+  const match = useMatch('/item/:id');
   const [hovered, hover] = useState(false);
   const [rnd] = useState(() => Math.random());
   const name = getUuid(url);
-  const isActive = params?.id === name;
+  const isActive = match?.params.id === name;
 
   useCursor(hovered);
 

@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { ThemeKey, themes } from '../data/themes';
+import { WORDS, ANIMATION_CONFIG } from '../data/constants';
 
 interface MatrixChar {
   char: string;
@@ -11,7 +13,7 @@ interface MatrixChar {
 }
 
 interface HackathonBackgroundProps {
-  theme?: 'purple' | 'black' | 'dark-blue' | 'green';
+  theme?: ThemeKey;
 }
 
 export function HackathonBackground({
@@ -26,86 +28,17 @@ export function HackathonBackground({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Theme Configuration
-    const themeConfig = {
-      purple: {
-        bg: '#000000', // Pure Black
-        wordShadow: '#a78bfa', // Violet-400 glow
-        // Deeper Violet for richer contrast
-        wordColor: (opacity: number) => `rgba(139, 92, 246, ${opacity})`, // Violet-500
-        bgShadow: '#4c1d95',
-        bgRgb: (opacity: number) => {
-          // Boosted background brightness
-          const r = Math.floor(120 + opacity * 100);
-          const g = Math.floor(70 + opacity * 80);
-          const b = Math.floor(200 + opacity * 55);
-          return `rgba(${r}, ${g}, ${b}, ${opacity * 0.9})`;
-        },
-      },
-      black: {
-        bg: '#000000', // Pure Black
-        wordShadow: '#ffffff', // White Glow
-        wordColor: (opacity: number) => `rgba(255, 255, 255, ${opacity})`,
-        bgShadow: '#cccccc',
-        bgRgb: (opacity: number) => {
-          // Boosted gray brightness
-          const v = Math.floor(90 + opacity * 100);
-          return `rgba(${v}, ${v}, ${v}, ${opacity * 0.8})`;
-        },
-      },
-      'dark-blue': {
-        bg: '#020617', // Dark Slate Blue
-        wordShadow: '#60a5fa', // Blue-400 Glow
-        // Deeper Blue (Blue-500)
-        wordColor: (opacity: number) => `rgba(59, 130, 246, ${opacity})`,
-        bgShadow: '#1e40af',
-        bgRgb: (opacity: number) => {
-          // Boosted blue brightness
-          const r = Math.floor(40 + opacity * 40);
-          const g = Math.floor(80 + opacity * 60);
-          const b = Math.floor(140 + opacity * 115);
-          return `rgba(${r}, ${g}, ${b}, ${opacity * 0.8})`;
-        },
-      },
-      green: {
-        bg: '#000000', // Pure Black for Matrix feel
-        wordShadow: '#00ff41', // Matrix Neon Green Glow
-        // Deeper Green (Green-500)
-        wordColor: (opacity: number) => `rgba(34, 197, 94, ${opacity})`,
-        bgShadow: '#008f11',
-        bgRgb: (opacity: number) => {
-          // Boosted matrix rain brightness
-          const g = Math.floor(100 + opacity * 155);
-          return `rgba(0, ${g}, 0, ${opacity * 0.9})`;
-        },
-      },
-    };
-
-    const colors = themeConfig[theme];
+    const colors = themes[theme];
 
     // Words to show prominently
-    const words = [
-      'EMONAD',
-      'CHOG',
-      'SHRAMP',
-      // 'MONAD', // Removed as requested
-      'MOTION',
-      'MONCOCK',
-      'MONAD LISA',
-      '143',
-      'MONSHI',
-      'NADS',
-      'MONARK',
-      'MOFU',
-      'HOGDOG',
-      'MONWOLF',
-    ];
+    const words = WORDS;
     const allChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ';
 
-    const fontSize = 18;
-    const gap = 26;
+    const fontSize = ANIMATION_CONFIG.fontSize;
+    const gap = ANIMATION_CONFIG.gap;
     let grid: MatrixChar[][] = [];
     let cols = 0;
+
     let rows = 0;
 
     const createCell = (char?: string): MatrixChar => ({
@@ -251,7 +184,10 @@ export function HackathonBackground({
       canvas.height = window.innerHeight;
 
       // Higher spawn rate for desktop
-      spawnRate = window.innerWidth > 1024 ? 0.15 : 0.05;
+      spawnRate =
+        window.innerWidth > 1024
+          ? ANIMATION_CONFIG.desktopSpawnRate
+          : ANIMATION_CONFIG.mobileSpawnRate;
 
       initGrid();
     };

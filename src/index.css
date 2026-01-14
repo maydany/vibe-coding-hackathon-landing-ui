@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @layer base {
   html {
@@ -7,4 +7,3 @@
     -moz-osx-font-smoothing: grayscale;
   }
 }
-

@@ -28,10 +28,11 @@ export function Navbar() {
             <Link
               key={item.name}
               to={item.href}
-              className={`text-sm font-medium transition-colors hover:text-blue-400 ${location.pathname === item.href
+              className={`text-sm font-medium transition-colors hover:text-blue-400 ${
+                location.pathname === item.href
                   ? 'text-purple-400 drop-shadow-[0_0_8px_rgba(192,132,252,0.5)]'
                   : 'text-gray-300'
-                }`}
+              }`}
             >
               {item.name}
             </Link>
@@ -59,8 +60,11 @@ export function Navbar() {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-lg font-medium hover:text-blue-400 ${location.pathname === item.href ? 'text-purple-400' : 'text-gray-300'
-                  }`}
+                className={`text-lg font-medium hover:text-blue-400 ${
+                  location.pathname === item.href
+                    ? 'text-purple-400'
+                    : 'text-gray-300'
+                }`}
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
