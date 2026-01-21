@@ -30,6 +30,11 @@ const PhaserGame = () => {
                 frameWidth: 133,
                 frameHeight: 120
             });
+            // Total width: 536, Height: 96. Frames: 4. Frame width: 134.
+            this.load.spritesheet('mushroom_love', '/mushroom_love.png', {
+                frameWidth: 134,
+                frameHeight: 96
+            });
         }
 
         function create(this: Phaser.Scene) {
@@ -54,6 +59,19 @@ const PhaserGame = () => {
             // Add single sprite to center
             const mushroom = this.add.sprite(400, 300, 'mushroom_stand1');
             mushroom.play('stand1');
+
+            // Create love animation
+            this.anims.create({
+                key: 'love',
+                frames: this.anims.generateFrameNumbers('mushroom_love', { start: 0, end: 3 }),
+                frameRate: 6,
+                repeat: -1,
+                yoyo: true
+            });
+
+            // Add love sprite to the right
+            const loveMushroom = this.add.sprite(550, 310, 'mushroom_love'); // Slightly lower to align feet if needed, or same Y
+            loveMushroom.play('love');
         }
 
         function update(this: Phaser.Scene) {
