@@ -7,6 +7,7 @@ import { ComputerHero } from './components/ComputerHero';
 import { Home } from './components/Home';
 import { Features } from './components/Features';
 import { Footer } from './components/Footer';
+import { Game } from './components/Game';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
                 </>
               }
             />
+            <Route path="/game" element={<Game />} />
           </Routes>
         </main>
         <Footer />

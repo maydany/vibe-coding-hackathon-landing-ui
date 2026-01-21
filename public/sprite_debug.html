@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background: #333;
+            color: white;
+            margin: 20px;
+        }
+
+        .container {
+            position: relative;
+            display: inline-block;
+        }
+
+        img {
+            display: block;
+            border: 1px solid red;
+        }
+
+        .grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            border-top: 1px solid rgba(0, 255, 0, 0.5);
+            border-left: 1px solid rgba(0, 255, 0, 0.5);
+        }
+
+        .controls {
+            margin-bottom: 20px;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            z-index: 100;
+        }
+
+        .cell {
+            position: absolute;
+            border-right: 1px solid rgba(0, 255, 0, 0.5);
+            border-bottom: 1px solid rgba(0, 255, 0, 0.5);
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: yellow;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        Width: <input type="number" id="w" value="70" onchange="drawGrid()">
+        Height: <input type="number" id="h" value="75" onchange="drawGrid()">
+        Margin: <input type="number" id="m" value="0" onchange="drawGrid()">
+        Spacing: <input type="number" id="s" value="0" onchange="drawGrid()">
+    </div>
+    <br><br><br>
+    <div class="container" id="container">
+        <img src="/mushroom.png" id="img">
+        <div id="gridOverlay"></div>
+    </div>
+
+    <script>
+        function drawGrid() {
+            const w = parseInt(document.getElementById('w').value);
+            const h = parseInt(document.getElementById('h').value);
+            const m = parseInt(document.getElementById('m').value);
+            const s = parseInt(document.getElementById('s').value);
+            
+            const overlay = document.getElementById('gridOverlay');
+            overlay.innerHTML = '';
+            
+            const img = document.getElementById('img');
+            const totalW = img.naturalWidth || 483;
+            const totalH = img.naturalHeight || 1024;
+            
+            let cols = Math.floor((totalW - m) / (w + s));
+            let rows = Math.floor((totalH - m) / (h + s));
+            
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.style.width = w + 'px';
+                    cell.style.height = h + 'px';
+                    cell.style.top = (m + r * (h + s)) + 'px';
+                    cell.style.left = (m + c * (w + s)) + 'px';
+                    cell.innerText = (r * cols + c);
+                    overlay.appendChild(cell);
+                }
+            }
+        }
+        
+        window.onload = () => {
+             // wait for image load
+             setTimeout(drawGrid, 100);
+        };
+    </script>
+</body>
+
+</html>
